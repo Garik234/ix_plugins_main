@@ -9,8 +9,13 @@ end
 
 ix.command.Add("text", {
     description = "Displays text on the specified player's screen.",
+    adminOnly = true,
     arguments = {ix.type.string, ix.type.string, ix.type.number},
     OnRun = function(self, client, steamID, text, wordCount)
+        if not client:IsAdmin() then
+            return "You do not have permissions to use this command."
+        end
+
         local target = nil
         for _, v in ipairs(player.GetAll()) do
             if v:SteamID() == steamID then
@@ -32,8 +37,13 @@ ix.command.Add("text", {
 
 ix.command.Add("cleartext", {
     description = "Removes displayed text from the player's screen.",
+    adminOnly = true,
     arguments = {ix.type.string},
     OnRun = function(self, client, steamID)
+        if not client:IsAdmin() then
+            return "You do not have permissions to use this command."
+        end
+
         local target = nil
         for _, v in ipairs(player.GetAll()) do
             if v:SteamID() == steamID then
